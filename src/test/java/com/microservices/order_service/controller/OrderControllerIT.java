@@ -2,6 +2,7 @@ package com.microservices.order_service.controller;
 
 import com.microservices.order_service.dto.OrderRequest;
 import com.microservices.order_service.service.OrderService;
+import com.microservices.order_service.stubs.InventoryClientStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -44,7 +45,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                      2
             );
             doNothing().when(orderService).placeOrder(orderRequest);
-
             // Act & Assert
             mockMvc.perform(post("/api/order")
                             .contentType(MediaType.APPLICATION_JSON)

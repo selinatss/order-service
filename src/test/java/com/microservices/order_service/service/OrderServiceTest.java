@@ -1,4 +1,5 @@
 package com.microservices.order_service.service;
+import com.microservices.order_service.clients.InventoryClient;
 import com.microservices.order_service.dto.OrderRequest;
 import com.microservices.order_service.modal.Order;
 import com.microservices.order_service.repository.OrderRepository;
@@ -12,11 +13,15 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class OrderServiceTest {
 
     @Mock
     private OrderRepository orderRepository;
+
+    @Mock
+    private InventoryClient inventoryClient;
 
     @InjectMocks
     private OrderService orderService;
@@ -35,6 +40,8 @@ public class OrderServiceTest {
                 2
         );
         // Act
+        when(inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity())).thenReturn(true);
+
         orderService.placeOrder(orderRequest);
 
         // Assert
